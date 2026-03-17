@@ -76,18 +76,20 @@ docker compose logs -f app
 ## Управление
 
 ```bash
-# Запустить
-docker compose up -d
+# 1. Перейти в каталог проекта
+cd "C:\Users\Maxim\OneDrive\Desktop\discrod-telegram"
 
-# Остановить
-docker compose down
+# 2. Поднять БД и Redis
+docker-compose up -d postgres redis
 
-# Перезапустить только приложение
-docker compose restart app
+# 3. Проверить доступные сервисы
+docker-compose config --services
+# Должно вывести: postgres, redis, app, migrate
 
-# Посмотреть логи
-docker compose logs -f app
+# 4. Запустить миграции
+docker-compose run --rm migrate
 
-# Применить новые миграции БД
-docker compose run --rm migrate
+# 5. Запустить приложение
+docker-compose up -d app
+docker-compose logs -f app
 ```
